@@ -58,7 +58,7 @@ contract LockDropContract is Math{
        smartContract = ERC(tokenContract);
        smartContract.transfer(
        _receiver, 
-       Math.mul(_amount,50)
+       Math.mul(_amount,lockDropPerBnB)
        );
        payable(admin).transfer(_amount);
        emit LockDrop(_receiver,Math.mul(_amount,lockDropPerBnB));
