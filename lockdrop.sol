@@ -6,6 +6,7 @@ interface ERC {
     function transfer(address to, uint value) external returns (bool);
 }
 
+
 contract Math {
     function mul(uint256 a, uint256 b) internal pure returns (uint256) {
         if (a == 0) {
@@ -39,6 +40,7 @@ contract LockDropContract is Math{
         
    address public tokenContract;
    address public admin;
+   uint256 public lockDropPerBnB;
    
    modifier isAdmin(){
        require(msg.sender == admin,"Not Admin");
@@ -59,7 +61,7 @@ contract LockDropContract is Math{
        Math.mul(_amount,50)
        );
        payable(admin).transfer(_amount);
-       emit LockDrop(_receiver,Math.mul(_amount,50));
+       emit LockDrop(_receiver,Math.mul(_amount,lockDropPerBnB));
    }
    
    function updateAdmin(address _newAdmin) isAdmin public returns(bool success){
@@ -69,6 +71,11 @@ contract LockDropContract is Math{
    
    function updateTokenContract(address _newContract) isAdmin public returns(bool success){
        tokenContract = _newContract;
+       return true;
+   }
+   
+   function updateLockDropPerBnB(uint256 _amount) isAdmin public returns(bool success){
+       lockDropPerBnB = _amount;
        return true;
    }
    
